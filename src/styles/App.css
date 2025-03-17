@@ -1,0 +1,590 @@
+/* Ultra-modern styling for Tic Tac Toe - Optimized for single-page view */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+:root {
+  --primary-color: #6c5ce7;
+  --primary-light: #a29bfe;
+  --secondary-color: #00cec9;
+  --accent-color: #fdcb6e;
+  --danger-color: #ff7675;
+  --dark-bg: #2d3436;
+  --darker-bg: #1e272e;
+  --light-text: #dfe6e9;
+  --x-color: #00cec9;
+  --o-color: #fd79a8;
+  --winner-line: #fdcb6e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: var(--darker-bg);
+  color: var(--light-text);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  padding: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background effects - reduced */
+.bg-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.particle {
+  position: absolute;
+  opacity: 0.2;
+  border-radius: 50%;
+  animation: float 15s infinite linear;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0.2;
+  }
+}
+
+/* Header & Title - compacted */
+.game-header {
+  text-align: center;
+  margin-bottom: 5px;
+  position: relative;
+}
+
+.game-title {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0;
+  position: relative;
+}
+
+.game-subtitle {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-bottom: 5px;
+}
+
+/* Game Container - more compact */
+.game-container {
+  background-color: var(--dark-bg);
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  max-width: 380px;
+  width: 95%;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.container-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at center,
+    rgba(108, 92, 231, 0.1) 0%,
+    rgba(0, 206, 201, 0.05) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Game mode selectors - compacted */
+.game-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 8px;
+}
+
+.control-row {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.mode-button {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--light-text);
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.mode-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: -1;
+}
+
+.mode-button:hover {
+  transform: translateY(-2px);
+}
+
+.mode-button.active {
+  background-color: transparent;
+}
+
+.mode-button.active::before {
+  opacity: 1;
+}
+
+.difficulty-button {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--light-text);
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.difficulty-button.active {
+  background-color: var(--secondary-color);
+  color: var(--darker-bg);
+}
+
+/* Player info & scores - compacted */
+.players-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.player-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 8px;
+  width: 48%;
+  text-align: center;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.player-card.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.player-card.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--x-color), var(--primary-color));
+}
+
+.player-card.active.player-o::before {
+  background: linear-gradient(to bottom, var(--o-color), var(--danger-color));
+}
+
+.player-symbol {
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: inline-block;
+  margin-bottom: 2px;
+}
+
+.player-x .player-symbol {
+  color: var(--x-color);
+}
+
+.player-o .player-symbol {
+  color: var(--o-color);
+}
+
+.player-name {
+  font-size: 0.7rem;
+  margin-bottom: 2px;
+}
+
+.player-score {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* Game status - compacted */
+.game-status {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 6px;
+  text-align: center;
+  margin-bottom: 8px;
+  position: relative;
+  overflow: hidden;
+  min-height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 1;
+}
+
+.status-highlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(108, 92, 231, 0.3), rgba(0, 206, 201, 0.3));
+  z-index: 0;
+  opacity: 0;
+}
+
+.game-status.winner .status-highlight {
+  opacity: 1;
+}
+
+/* Game board - responsive sizing */
+.game-board-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.board-container {
+  position: relative;
+  width: 100%;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  position: relative;
+}
+
+.square {
+  aspect-ratio: 1/1;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  user-select: none;
+}
+
+.square:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* X and O animations - simplified */
+.x-mark, .o-mark {
+  position: relative;
+  width: 70%;
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.x-mark {
+  color: var(--x-color);
+}
+
+.o-mark {
+  color: var(--o-color);
+}
+
+.x-mark::before, .x-mark::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 10%;
+  background-color: currentColor;
+  border-radius: 3px;
+}
+
+.x-mark::before {
+  transform: rotate(45deg);
+}
+
+.x-mark::after {
+  transform: rotate(-45deg);
+}
+
+.o-mark::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 8px solid currentColor;
+  border-radius: 50%;
+}
+
+/* Winner line - simplified */
+.winner-line {
+  position: absolute;
+  background-color: var(--winner-line);
+  z-index: 5;
+  border-radius: 2px;
+  opacity: 0.8;
+  box-shadow: 0 0 10px rgba(253, 203, 110, 0.5);
+}
+
+.winner-line.horizontal {
+  height: 5px;
+  width: 90%;
+  left: 5%;
+}
+
+.winner-line.vertical {
+  width: 5px;
+  height: 90%;
+  top: 5%;
+}
+
+.winner-line.diagonal-1 {
+  height: 5px;
+  width: 125%;
+  transform: rotate(45deg) translateX(-50%);
+  transform-origin: left center;
+}
+
+.winner-line.diagonal-2 {
+  height: 5px;
+  width: 125%;
+  transform: rotate(-45deg) translateX(-50%);
+  transform-origin: left center;
+}
+
+/* Game actions - compacted */
+.game-actions {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.action-button {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--light-text);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+}
+
+.reset-button {
+  background-color: var(--primary-color);
+}
+
+.undo-button {
+  background-color: var(--accent-color);
+  color: var(--darker-bg);
+}
+
+/* Settings panel - compacted */
+.settings-panel {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 8px;
+  margin-top: 8px;
+  transform: translateY(10px);
+  opacity: 0;
+  transition: all 0.2s ease;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.settings-panel.visible {
+  transform: translateY(0);
+  opacity: 1;
+  max-height: 200px;
+}
+
+.settings-title {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  color: var(--secondary-color);
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.settings-label {
+  flex: 1;
+  font-size: 0.7rem;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: .3s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Confetti animation - simplified */
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.confetti {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background-color: var(--primary-color);
+  opacity: 0.6;
+  transform: rotate(45deg);
+}
+
+/* Responsive design - optimized for no scrolling */
+@media (max-height: 700px) {
+  .game-title {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+  }
+  
+  .game-subtitle {
+    font-size: 0.7rem;
+    margin-bottom: 2px;
+  }
+  
+  .game-container {
+    padding: 8px;
+  }
+  
+  .square {
+    font-size: 1.5rem;
+  }
+  
+  .player-symbol {
+    font-size: 1rem;
+  }
+  
+  .player-score {
+    font-size: 1rem;
+  }
+  
+  .game-status {
+    min-height: 30px;
+  }
+  
+  .status-text {
+    font-size: 0.7rem;
+  }
+  
+  .action-button {
+    padding: 4px 8px;
+    font-size: 0.6rem;
+  }
+}
