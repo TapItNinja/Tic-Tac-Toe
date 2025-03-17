@@ -3,7 +3,7 @@
 ### **Tic-Tac-Toe Ultimate Edition 🎮**  
 
 <div align="center">
-  <img src="https://darling-taiyaki-03b8cf.netlify.app/favicon.ico" alt="Tic-Tac-Toe Logo" width="200"/>
+  <img src="https://github.com/TapItNinja/Tic-Tac-Toe/blob/main/components/logo.png" alt="Tic-Tac-Toe Logo" width="200"/>
   
   <h3>Multiplayer & AI-Powered Tic-Tac-Toe</h3>
   
