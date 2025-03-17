@@ -43,9 +43,9 @@ Tic-Tac-Toe Ultimate Edition is a **modern, feature-rich** take on the classic g
       <td align="center">Settings</td>
     </tr>
     <tr>
-      <td><img src="https://darling-taiyaki-03b8cf.netlify.app/screenshots/board.png" width="200"/></td>
-      <td><img src="https://darling-taiyaki-03b8cf.netlify.app/screenshots/win.png" width="200"/></td>
-      <td><img src="https://darling-taiyaki-03b8cf.netlify.app/screenshots/settings.png" width="200"/></td>
+      <td><img src="https://github.com/TapItNinja/Tic-Tac-Toe/blob/main/components/board.png" width="200"/></td>
+      <td><img src="https://github.com/TapItNinja/Tic-Tac-Toe/blob/main/components/win.png" width="200"/></td>
+      <td><img src="https://github.com/TapItNinja/Tic-Tac-Toe/blob/main/components/settings.png" width="200"/></td>
     </tr>
   </table>
 </div>
